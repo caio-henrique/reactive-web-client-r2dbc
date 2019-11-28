@@ -31,22 +31,15 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-r2dbc</artifactId>
 <!--			<version>1.0.0.M2</version>-->
-			<version>1.0.0.RC1</version>
+			<version>1.0.0.M1</version>
+<!--			<version>1.0.0.RC1</version>-->
 		</dependency>
 
 		<dependency>
 			<groupId>io.r2dbc</groupId>
 			<artifactId>r2dbc-postgresql</artifactId>
 			<version>1.0.0.M6</version>
-<!--			<version>0.8.0.M8</version>-->
 		</dependency>
-
-		<!-- Enable for connection pooling -->
-<!--		<dependency>-->
-<!--			<groupId>io.r2dbc</groupId>-->
-<!--			<artifactId>r2dbc-pool</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
 	</dependencies>
 
 	<build>
