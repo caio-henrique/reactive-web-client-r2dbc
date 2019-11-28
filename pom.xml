@@ -2,12 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.reactive</groupId>
 	<artifactId>reactive-web-client-r2dbc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -26,35 +28,19 @@
 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jdbc</artifactId>
-			<version>1.0.0.r2dbc-SNAPSHOT</version>
+			<artifactId>spring-data-r2dbc</artifactId>
+<!--			<version>1.0.0.M2</version>-->
+			<version>1.0.0.RC1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>io.r2dbc</groupId>
 			<artifactId>r2dbc-postgresql</artifactId>
-			<version>1.0.0.ISSUE-10-SNAPSHOT</version>
+			<version>1.0.0.M6</version>
+<!--			<version>0.8.0.M8</version>-->
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot.experimental</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-r2dbc</artifactId>-->
-<!--			<version>0.1.0.M1</version>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot.experimental</groupId>-->
-<!--			<artifactId>spring-boot-actuator-autoconfigure-r2dbc</artifactId>-->
-<!--			<version>0.1.0.M1</version>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>io.r2dbc</groupId>-->
-<!--			<artifactId>r2dbc-postgresql</artifactId>-->
-<!--			<version>0.8.0.M8</version>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
-
-<!--		&lt;!&ndash; Enable for connection pooling &ndash;&gt;-->
+		<!-- Enable for connection pooling -->
 <!--		<dependency>-->
 <!--			<groupId>io.r2dbc</groupId>-->
 <!--			<artifactId>r2dbc-pool</artifactId>-->
@@ -71,49 +57,12 @@
 		</plugins>
 	</build>
 
-<!--	<repositories>-->
-<!--		<repository>-->
-<!--			<id>spring-milestone</id>-->
-<!--			<url>https://repo.spring.io/milestone</url>-->
-<!--		</repository>-->
-<!--	</repositories>-->
-
 	<repositories>
 		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<id>repository.spring.milestone</id>
+			<name>Spring Milestone Repository</name>
+			<url>http://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

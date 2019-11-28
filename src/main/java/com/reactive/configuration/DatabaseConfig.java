@@ -1,50 +1,68 @@
 package com.reactive.configuration;
 
-import com.reactive.repository.PersonRepository;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
+import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import io.r2dbc.spi.ConnectionFactoryOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.r2dbc.function.DatabaseClient;
-import org.springframework.data.r2dbc.repository.support.R2dbcRepositoryFactory;
-import org.springframework.data.relational.core.mapping.RelationalMappingContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
+import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager;
+import org.springframework.data.r2dbc.connectionfactory.init.CompositeDatabasePopulator;
+import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryInitializer;
+import org.springframework.data.r2dbc.connectionfactory.init.DatabasePopulator;
+import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator;
+import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
+import org.springframework.transaction.ReactiveTransactionManager;
 
 @Configuration
-class DatabaseConfig {
+class DatabaseConfig extends AbstractR2dbcConfiguration {
 
     @Bean
+    @Override
     public ConnectionFactory connectionFactory() {
-
         return new PostgresqlConnectionFactory(
                 PostgresqlConnectionConfiguration.builder()
                         .host("localhost")
+                        .port(5432)
                         .database("reactive")
                         .username("teste")
                         .password("teste")
                         .build());
+
+//        ConnectionFactory connectionFactory = ConnectionFactories.get(ConnectionFactoryOptions.builder()
+//                .option(ConnectionFactoryOptions.DRIVER, "postgresql")
+//                .option(ConnectionFactoryOptions.HOST, "localhost")
+//                .option(ConnectionFactoryOptions.PORT, 5432)  // optional, defaults to 5432
+//                .option(ConnectionFactoryOptions.USER, "teste")
+//                .option(ConnectionFactoryOptions.PASSWORD, "teste")
+//                .option(ConnectionFactoryOptions.DATABASE, "reactive")  // optional
+////                .option(OPTIONS, options) // optional
+//                .build());
+//
+//        return connectionFactory;
     }
 
     @Bean
-    public DatabaseClient databaseClient(@Qualifier("connectionFactory") ConnectionFactory connectionFactory) {
-
-        return DatabaseClient.builder()
-                .connectionFactory(connectionFactory)
-                .build();
+    ReactiveTransactionManager transactionManager(ConnectionFactory connectionFactory) {
+        return new R2dbcTransactionManager(connectionFactory);
     }
 
     @Bean
-    public R2dbcRepositoryFactory repositoryFactory(DatabaseClient client) {
+    public ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
 
-        RelationalMappingContext context = new RelationalMappingContext();
-        context.afterPropertiesSet();
+        ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
+        initializer.setConnectionFactory(connectionFactory);
 
-        return new R2dbcRepositoryFactory(client, context);
-    }
+//        CompositeDatabasePopulator populator = new CompositeDatabasePopulator();
+//        populator.addPopulators(new ResourceDatabasePopulator(new ClassPathResource("com/foo/sql/db-schema.sql")));
+//        populator.addPopulators(new ResourceDatabasePopulator(new ClassPathResource("com/foo/sql/test-data1.sql")));
+//        initializer.setDatabasePopulator(populator);
 
-    @Bean
-    public PersonRepository personRepository(R2dbcRepositoryFactory factory) {
-        return factory.getRepository(PersonRepository.class);
+        return initializer;
     }
 }
