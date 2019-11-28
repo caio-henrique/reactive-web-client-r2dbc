@@ -1,7 +1,8 @@
 package com.reactive.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
-
 import java.util.Objects;
 
 public class Person {
@@ -11,7 +12,9 @@ public class Person {
     private String firstName;
     private String lastName;
 
-    public Person(Integer id, String firstName, String lastName) {
+    @JsonCreator
+    public Person(@JsonProperty("id") Integer id, @JsonProperty("firstName") String firstName,
+                  @JsonProperty("lastName") String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -21,24 +24,12 @@ public class Person {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     @Override
